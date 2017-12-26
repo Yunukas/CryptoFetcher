@@ -20,9 +20,9 @@ class Elements extends Component {
           onPress={this.handlePress}
           onLongPress={this.handleLongPress}>
           <View style={styles.PinBodyChild}>
-            <Text>{element.symbol}</Text>
-            <Text>{element.price_usd}</Text>
-            <Text>{element.percent_change_24h}</Text>
+            <Text style={styles.text}>{element.symbol}</Text>
+            <Text style={styles.text}>{element.price_usd}</Text>
+            <Text style={styles.text}>{element.percent_change_24h}</Text>
           </View>
         </TouchableHighlight>
     ));
@@ -63,9 +63,9 @@ export default class App extends Component {
       return(
         <View style={styles.PinContainer}>
           <View style={styles.PinHeader}>
-            <View><Text>Type</Text></View>
-            <View><Text>Price</Text></View>
-            <View><Text>% Change</Text></View>
+            <View><Text style={styles.text}>Type</Text></View>
+            <View><Text style={styles.text}>Price</Text></View>
+            <View><Text style={styles.text}>% Change</Text></View>
           </View>
           <View style={styles.PinBody}>
             <Elements value={this.state.cryptoData} />
@@ -91,13 +91,15 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch'
   },
   PinHeader: {
-    flex: 1,
+    flex: 0.5,
     backgroundColor: 'white',
-    marginTop: 20,
+    marginTop: 30,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    padding: 8
+    padding: 8,
+    borderRadius: 5,
+    borderWidth: 2, 
   },
   PinBody: {
     flex: 5,
@@ -114,5 +116,10 @@ const styles = StyleSheet.create({
   PinFooter: {
     flex: 5,
     backgroundColor: 'red'
+  },
+
+  text: {
+    color: '#555555',
+    fontSize: 20
   }
 });
