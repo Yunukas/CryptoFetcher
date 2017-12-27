@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { FlatList, Dimensions, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import api from './utilities';
+
+let winSize = Dimensions.get('window');
 
 class Elements extends Component {
   handlePress(){
@@ -14,15 +16,18 @@ class Elements extends Component {
     let values = this.props.value;
     let result;
     result = values.map((element, index) => (
-      
+
         <TouchableHighlight
+          style={styles.TouchablePinBodyChild}
           key={index} 
           onPress={this.handlePress}
           onLongPress={this.handleLongPress}>
           <View style={styles.PinBodyChild}>
-            <Text style={styles.text}>{element.symbol}</Text>
-            <Text style={styles.text}>{element.price_usd}</Text>
-            <Text style={styles.text}>{element.percent_change_24h}</Text>
+            <View style={styles.PinBodyChildText}>
+              <Text style={styles.text}>{element.symbol}</Text>
+            </View>
+            <View style={styles.PinBodyChildText}><Text style={styles.text}>{element.price_usd}</Text></View>
+            <View style={styles.PinBodyChildText}><Text style={styles.text}>{element.percent_change_24h}</Text></View>
           </View>
         </TouchableHighlight>
     ));
@@ -63,9 +68,9 @@ export default class App extends Component {
       return(
         <View style={styles.PinContainer}>
           <View style={styles.PinHeader}>
-            <View><Text style={styles.text}>Type</Text></View>
-            <View><Text style={styles.text}>Price</Text></View>
-            <View><Text style={styles.text}>% Change</Text></View>
+            <View style={styles.PinBodyChildText}><Text style={styles.PinHeaderText}>Type</Text></View>
+            <View style={styles.PinBodyChildText}><Text style={styles.PinHeaderText}>Price</Text></View>
+            <View style={styles.PinBodyChildText}><Text style={styles.PinHeaderText}>% Change</Text></View>
           </View>
           <View style={styles.PinBody}>
             <Elements value={this.state.cryptoData} />
@@ -78,7 +83,6 @@ export default class App extends Component {
       )}
   }
 }
-
 const styles = StyleSheet.create({
   PinContainer: {
     flex: 1,
@@ -91,35 +95,51 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch'
   },
   PinHeader: {
-    flex: 0.5,
-    backgroundColor: 'white',
+    flex: 0.35,
     marginTop: 30,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    padding: 8,
-    borderRadius: 5,
-    borderWidth: 2, 
+    padding: 7,
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: 'steelblue',
+    backgroundColor: 'skyblue' 
+  },
+  PinHeaderText: {
+    color: '#555555',
+    fontSize: 40/winSize.scale,
+    fontWeight: 'bold'
   },
   PinBody: {
     flex: 5,
-    backgroundColor: 'white',
+    borderRadius:15,
+    borderColor: 'wheat',
+    borderWidth: 2,
+    backgroundColor: 'whitesmoke',
     flexDirection: 'column',
-    padding: 8
+    justifyContent: 'space-between'
+  },
+  TouchablePinBodyChild:{
+    borderRadius: 15
   },
   PinBodyChild: {
-   borderWidth: 1,
-   borderColor: 'black',
-   flexDirection: 'row',
-   justifyContent: 'space-between',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 8
+  },
+  PinBodyChildText: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    flex: 1,
   },
   PinFooter: {
-    flex: 5,
-    backgroundColor: 'red'
+    flex: 2,
+    backgroundColor: 'white',
   },
 
   text: {
     color: '#555555',
-    fontSize: 20
+    fontSize: 40/winSize.scale,
   }
 });
