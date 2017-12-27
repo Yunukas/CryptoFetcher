@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Dimensions, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { ScrollView, Dimensions, StyleSheet, Text, View, TouchableHighlight, ListView, RefreshControl } from 'react-native';
 import api from './utilities';
 
 let winSize = Dimensions.get('window');
@@ -45,7 +45,18 @@ export default class App extends Component {
     this.state = {
       isLoading: true,
       cryptoData: [],
+      refreshing: false
     }
+  }
+
+  _onRefresh() {
+    this.setState({refreshing: true});
+    api.GetCryptoData().then((response) => {
+      this.setState({
+        cryptoData: response,
+        refreshing: false
+      })
+    });
   }
   
 
@@ -73,7 +84,18 @@ export default class App extends Component {
             <View style={styles.PinBodyChildText}><Text style={styles.PinHeaderText}>% Change</Text></View>
           </View>
           <View style={styles.PinBody}>
-            <Elements value={this.state.cryptoData} />
+            <ScrollView 
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh.bind(this)}
+                  tintColor={'skyblue'}
+                  title={'Release to Refresh...'}
+                />
+              }
+            >
+              <Elements value={this.state.cryptoData} />
+            </ScrollView>
           </View>
              
           <View style={styles.PinFooter}>
