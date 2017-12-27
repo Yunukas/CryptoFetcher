@@ -13,10 +13,8 @@ class Elements extends Component {
   }
   
   render(){
-    let values = this.props.value;
-    let result;
-    result = values.map((element, index) => (
-
+    return(   
+      this.props.value.map((element, index) => (
         <TouchableHighlight
           style={styles.TouchablePinBodyChild}
           key={index} 
@@ -24,17 +22,13 @@ class Elements extends Component {
           onLongPress={this.handleLongPress}>
           <View style={styles.PinBodyChild}>
             <View style={styles.PinBodyChildText}>
-              <Text style={styles.text}>{element.symbol}</Text>
+              <Text style={styles.text}>{index+1}){element.symbol}</Text>
             </View>
             <View style={styles.PinBodyChildText}><Text style={styles.text}>{element.price_usd}</Text></View>
             <View style={styles.PinBodyChildText}><Text style={styles.text}>{element.percent_change_24h}</Text></View>
           </View>
         </TouchableHighlight>
-    ));
-
-
-    return(
-      result
+      ))
     );
   }
 }
@@ -73,9 +67,6 @@ export default class App extends Component {
     if (this.state.isLoading) {
       return (<View style={styles.LoadingContainer}><Text>Loading...</Text></View>)
     }else{
-      let rows = [];
-      for(let value of this.state.cryptoData)
-       rows.push(value.symbol, value.price_usd, value.percent_change_24h);
       return(
         <View style={styles.PinContainer}>
           <View style={styles.PinHeader}>
@@ -118,6 +109,8 @@ const styles = StyleSheet.create({
   },
   PinHeader: {
     flex: 0.35,
+    marginLeft:10,
+    marginRight:10,
     marginTop: 30,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -134,7 +127,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   PinBody: {
-    flex: 5,
+    flex: 7,
+    marginLeft:10,
+    marginRight:10,
     borderRadius:15,
     borderColor: 'wheat',
     borderWidth: 2,
