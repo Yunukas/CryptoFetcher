@@ -15,7 +15,7 @@ class MyListItem extends Component {
   }
   
   render(){
-    let textColor = this.props.change[0]== "-" ? "red" : "green";
+    let textColor = this.props.change[0]== "-" ? "tomato" : "limegreen";
     
     return(   
         <TouchableHighlight
@@ -87,7 +87,7 @@ export default class App extends Component {
     return(
       <View
         style={{
-          backgroundColor: 'wheat',
+          backgroundColor: '#CED0CE',
           height: 1,
         }}
       />
@@ -206,8 +206,14 @@ const styles = StyleSheet.create({
     fontSize: 42/winSize.scale,
     fontFamily: 'Gill Sans'
   },
+  coinText: {
+    
+  },
+  priceText: {
+
+  },
   subText: {
-    fontSize: 20/winSize.scale,
-    fontFamily: 'GillSans-Light'
+    fontSize: 30/winSize.scale,
+    fontFamily: 'GillSans-Light',
   }
 });
