@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
   },
   PinHeader: {
     flex: 0.35,
-    marginLeft:10,
-    marginRight:10,
+    marginLeft:15,
+    marginRight:15,
     marginTop: 30,
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -165,8 +165,8 @@ const styles = StyleSheet.create({
   },
   PinBody: {
     flex: 7,
-    marginLeft:10,
-    marginRight:10,
+    marginLeft:15,
+    marginRight:15,
     backgroundColor: 'white',
     flexDirection: 'column',
     justifyContent: 'space-between'
