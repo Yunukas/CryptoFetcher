@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#555555' 
   },
   PinHeader1Child: {
-    flex:1.5,
+    flex:1.7,
   },
   PinHeader2Child: {
     flex:3.5,  
