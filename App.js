@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { Alert, FlatList, Dimensions, StyleSheet, Text, View, TouchableHighlight, ListView, RefreshControl } from 'react-native';
+import { 
+  Alert, 
+  FlatList, 
+  Dimensions, 
+  StatusBar, 
+  StyleSheet, 
+  Text, 
+  View, 
+  TouchableHighlight, 
+  RefreshControl 
+} from 'react-native';
+import { Button } from 'react-native-elements';
 import api from './utilities';
 
 let winSize = Dimensions.get('window');
@@ -33,8 +44,16 @@ class MyListItem extends Component {
                 <Text style={styles.subText}>{this.props.name}</Text>
               </View>
             </View>
-            <View style={styles.PinBody3Child}><Text style={styles.text}>${this.props.price}</Text></View>
-            <View style={styles.PinBody4Child}><Text style={styles.text}><Text style={{color: textColor}}>%{this.props.change}</Text></Text></View>
+            <View style={styles.PinBody3Child}>
+              <View style={styles.PinBody3GrandChild}>
+                <Text style={styles.text}>${this.props.price}</Text>
+                <View style={styles.PinBody3GrandChildSubText}>
+                  <Text style={styles.subText}>
+                    <Text style={{color: textColor}}>%{this.props.change}</Text>
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
         </TouchableHighlight>
     );
@@ -51,6 +70,7 @@ export default class App extends Component {
     }
   }
 
+  // pull down to refresh function
   _onRefresh() {
     this.setState({refreshing: true});
     api.GetCryptoData().then((response) => {
@@ -61,7 +81,7 @@ export default class App extends Component {
     });
   }
   
-
+  // get data after components mount
   componentDidMount() {
     api.GetCryptoData().then((response) => {
       this.setState({
@@ -99,11 +119,29 @@ export default class App extends Component {
     }else{
       return(
         <View style={styles.PinContainer}>
+          <StatusBar
+            barStyle="light-content"
+          />
           <View style={styles.PinHeader}>
-            <View style={styles.PinHeader1Child}><Text style={styles.PinHeaderText}>#</Text></View>
-            <View style={styles.PinHeader2Child}><Text style={styles.PinHeaderText}>Coin</Text></View>
-            <View style={styles.PinHeader3Child}><Text style={styles.PinHeaderText}>Price</Text></View>
-            <View style={styles.PinHeader4Child}><Text style={styles.PinHeaderText}>Change(24H)</Text></View>
+            <View style={styles.PinHeader1Child}>
+              <Button
+                icon={{name: 'add', size: 16}}
+                buttonStyle={{backgroundColor: 'transparent'}}
+                textStyle={{textAlign: 'center'}}
+                title={""}
+              />
+            </View>
+            <View style={styles.PinHeader2Child}>
+              <Text style={styles.PinHeaderText}>Watchlist</Text>
+            </View>
+            <View  style={styles.PinHeader3Child}>
+              <Button
+                icon={{name: 'share', size: 16}}
+                buttonStyle={{backgroundColor: 'transparent'}}
+                textStyle={{textAlign: 'center'}}
+                title={""}
+              />
+            </View>
           </View>
           <View style={styles.PinBody}>
             <FlatList 
@@ -136,32 +174,37 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch'
   },
   PinHeader: {
-    flex: 0.35,
-    marginLeft:15,
-    marginRight:15,
-    marginTop: 30,
+    flex: 0.45,
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    padding: 7,
-    borderBottomWidth: 2,
-    borderBottomColor: '#555555' 
+    paddingTop: 27,
+    backgroundColor: '#555555'
   },
   PinHeader1Child: {
-    flex:1.7,
+    flex:1,
+    justifyContent: 'flex-end',
+    marginLeft: 20
   },
   PinHeader2Child: {
-    flex:3.5,  
+    flex:9,
+    alignSelf: 'stretch',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingBottom: 10,
   },
   PinHeader3Child: {
-    flex:6,
-  },
-  PinHeader4Child: {
-    flex:5,
+    flex:1,
+    alignItems: 'flex-end',
   },
   PinHeaderText: {
-    color: '#555555',
-    fontSize: 35/winSize.scale,
-    fontFamily: 'GillSans-Bold'
+    color: 'white',
+    fontSize: 45/winSize.scale,
+    fontFamily: 'GillSans-Light'
+  },
+  reloadButton: {
+    color: 'white',
+    fontSize: 45/winSize.scale,
+    fontFamily: 'GillSans-Light'
   },
   PinBody: {
     flex: 7,
@@ -172,7 +215,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   TouchablePinBodyChild:{
-    borderRadius: 15
+    
   },
   PinBodyChild: {
     height: 60,
@@ -182,7 +225,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   PinBody1Child: {
-    flex:1.7,
+    flex:1,
   },
   PinBody2Child: {
     flex:3.5,
@@ -192,6 +235,14 @@ const styles = StyleSheet.create({
   },
   PinBody3Child: {
     flex:6,
+    alignItems: 'flex-end'
+  },
+  PinBody3GrandChild: {
+    flexDirection: 'column'
+  },
+  PinBody3GrandChildSubText: {
+    flexDirection: 'column',
+    alignItems: 'flex-end'
   },
   PinBody4Child: {
     flex:5,
@@ -213,7 +264,7 @@ const styles = StyleSheet.create({
 
   },
   subText: {
-    fontSize: 30/winSize.scale,
+    fontSize: 35/winSize.scale,
     fontFamily: 'GillSans-Light',
   }
 });
